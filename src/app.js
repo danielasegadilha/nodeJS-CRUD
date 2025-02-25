@@ -8,6 +8,13 @@ app.get('/', (req,res) => {
 })
 
 //novas rotas
+app.get('/listas', (req,res) => {
+    res.status(200).send('Listas de alunos')
+})
+
+app.get('/materias', (req,res) => {
+    res.status(200).send('Materias do Semestre')
+})
 
 
 //exposta app com rotas
