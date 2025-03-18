@@ -1,4 +1,16 @@
+import express from 'express' //antes da conversão para o módulo ES era: const express = require('express')
+
+const app = express()
+const dataAtual = new Date().toLocaleDateString();
 const horaAtual = new Date().toLocaleTimeString();
+
+//mock
+let lista = [
+    {id:1, nome: 'Bruno', grupo: 'P'},
+    {id:2, nome: 'Dani', grupo: 'A'},
+    {id:3, nome: 'Luis', grupo: 'A'},
+    {id:4, nome: 'Bruno', grupo: 'A'},
+]
 
 function searchAlunoById(id){
     return lista.filter(lista => lista.id == id)
@@ -11,16 +23,13 @@ function deleteAlunoById(id) {
 //indicar para o express para ler e entender o body de uma requisição HTTP quando ele vier como json. Assim ele faz um serialize da requisição e transforma em um objeto JavaScript
 app.use(express.json())
 
+// Criando uma rota padrão ou raiz - isso está na documentação do express
+app.get('/', (req, res) => {  //Aqui estamos criar um get através de uma arrow function. req representa request e res response. Você pode dar qualquer nome para essas variáveis
+    res.status(200).send('SENAC - Aula 02')
+})
+
 app.get('/lista', (req, res) => {
-    const sql = "SELECT * FROM alunos;"
-    conexao.query(sql, (error, result) => {
-        if (error){
-            console.log(error)
-            res.status(404).json({'error' : error})
-        } else {
-            res.status(200).send(result)
-        }
-    })   
+    res.status(200).send(lista)
 })
 
 app.get('/lista/:id', (req, res) => {
@@ -50,4 +59,3 @@ app.get('/horario', (req, res) => {
 })
 
 export default app
-
